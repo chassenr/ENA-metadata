@@ -63,7 +63,7 @@ taxid.uniq$category[is.na(taxid.uniq$category)] <- "other"
 # map to ena output
 ena.out$taxid_cat <- taxid.uniq$category[match(ena.out$tax_id, taxid.uniq$uid)]
 table(ena.out$taxid_cat)
-# ecological metagenomes   environmental sample organismal metagenomes                  other 
+# ecological metagenomes  environmental sample  organismal metagenomes                  other 
 # 325767                  15995                 509946                                  133603 
 
 
@@ -204,7 +204,7 @@ for(i in unique(check.summary$MIxS)) {
     main = paste("MIxS", i)
   )
 }
-# substantial increase of rund with target_gene info if checklists (MIxS environmental packages) are used
+# substantial increase of runs with target_gene info if checklists (MIxS environmental packages) are used
 # this increase is more even if all studies are considered (not just ecological metagenomes)
 # all runs 2015-2019: 1.8-20% with MIxS; ~1.8% no MIxS
 # ecological metagenomes 2014-2019: 3.4-50% with MIxS; ~1% no MIxS
