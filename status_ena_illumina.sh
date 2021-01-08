@@ -25,7 +25,6 @@ echo "</RUN_SET>" >> run.xml
 # get xml for experiment (WGS):
 cut -f1,33,77 results_read_run_tsv_WGS_metagenomes.txt > results_read_run_tsv_sample_exp_run.txt
 sed '1d' results_read_run_tsv_sample_exp_run.txt | cut -f2 | sed 's/^/https\:\/\/www\.ebi\.ac\.uk\/ena\/browser\/api\/xml\//' | parallel -j200 'wget -qO- {}' | sed '/<\/EXPERIMENT_SET>/,/<EXPERIMENT_SET>/d' >> experiment.xml
-# some entries are suppressed (no idea why)
 # append </EXPERIMENT_SET>
 cp experiment.xml experiment_ori.xml
 echo "</EXPERIMENT_SET>" >> experiment.xml
