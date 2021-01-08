@@ -1,5 +1,5 @@
 # Asessing status on metadata on ENA for Illumina amplicon studies from metagenomic material (taxid: ecological metagenomes)
-setwd("C:/Users/chassenrueck/Documents/Additional_projects/Data_mining_commentary")
+setwd("C:/Users/chassenrueck/Documents/Additional_projects/Data_mining_commentary/Amplicon/")
 require(data.table)
 require(reshape)
 # require(rentrez)
