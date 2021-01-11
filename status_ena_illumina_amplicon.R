@@ -6,7 +6,7 @@ require(reshape)
 require(XML)
 require(dplyr)
 require(tidyverse)
-# require(janitor)
+require(janitor)
 require(venn)
 
 # save.image("ENA_out/status_ena_illumina_amplicon.Rdata")
@@ -46,9 +46,9 @@ sampleXML.list <- map(
 )
 sampleXML.accnos <- map_chr(1:xmlSize(sampleXML.top), function(X) xmlValue(sampleXML.top[[X]][['IDENTIFIERS']][['PRIMARY_ID']]))
 sampleXML.list.df <- vector("list", length = length(sampleXML.list))
-for(i in 173004:length(test)) {
+for(i in 173004:length(sampleXML.list.df)) {
   suppressMessages(
-    test[[i]] <- t(sampleXML.list[[i]][, 1:2]) %>% 
+    sampleXML.list.df[[i]] <- t(sampleXML.list[[i]][, 1:2]) %>% 
       row_to_names(row_number = 1) %>% 
       as_tibble(.name_repair = "universal") %>% 
       clean_names()
