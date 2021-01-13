@@ -7,7 +7,7 @@ par(mfrow = c(2, 2), mar = c(4, 4, 1, 0.5), oma = c(1.5, 2, 2, 0))
 
 # plot 1:
 check.df <- data.frame(
-  lat.lon = factor(ifelse(!is.na(ena.out$lat) & !is.na(ena.out$lon), "yes", ifelse(ena.out$add_info_lat_lon, "some", "no")), levels = c("yes", "some", "no")),
+  lat.lon = factor(ifelse(!is.na(ena.out$lat) & !is.na(ena.out$lon), "yes", ifelse(ena.out$add_info_lat_lon, "xml", "no")), levels = c("yes", "xml", "no")),
   year.created = gsub("-.*", "", ena.out$first_created),
   gfbio = ena.out$broker_name == "GFBIO",
   broker = ena.out$broker_name != "",
