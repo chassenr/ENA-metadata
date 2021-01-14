@@ -94,7 +94,7 @@ barplot(
 )
 # labels
 mtext("Submission year", 1, 0, outer = T)
-mtext("Number of samples", 2, 0, outer = T)
+mtext("Number of runs", 2, 0, outer = T)
 
 
 ### figure 2: envo terms ####
@@ -184,7 +184,7 @@ for(i in 1:length(check.summary)) {
 }
 # labels
 mtext("Submission year", 1, 0, outer = T)
-mtext("Number of samples", 2, 0, outer = T)
+mtext("Number of runs", 2, 0, outer = T)
 
 
 
