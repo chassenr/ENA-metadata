@@ -99,7 +99,7 @@ mtext("Number of runs", 2, 0, outer = T)
 
 ### figure 2: envo terms ####
 
-# object size 700x750
+# object size 700x550
 par(mfcol = c(3, 2), mar = c(4, 4, 1, 0.5), oma = c(1.5, 2, 2, 0))
 
 # plot 1-3:
