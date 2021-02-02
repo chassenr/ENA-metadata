@@ -3,6 +3,10 @@
 ### figure 1: latlon, target gene, nominal length ####
 
 # object size 700x750
+
+tiff(file="/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot1.tiff",
+     width=700, height=750)
+
 par(mfrow = c(2, 2), mar = c(4, 4, 1, 0.5), oma = c(1.5, 2, 2, 0))
 
 # plot 1:
@@ -30,7 +34,7 @@ barplot(
   tcl = -0.3
 )
 mtext("All runs",3, 1, outer = F)
-mtext("Latitude/longitude",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 26)
+mtext("Latitude/longitude",3, 1, outer = F, font = 2, side = 3, line = 1.0, at = 25)
 #abline(h = 10000)
 # plot 2:
 check.summary <- cast(check.df, "MIxS + lat.lon ~ year.created", value = "study.accnos", fun.aggregate = "length")
@@ -74,7 +78,7 @@ barplot(
   mgp = c(2.5, 0.5, 0),
   tcl = -0.3
 )
-mtext("Nominal Length",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 24.5)
+mtext("Nominal Length",3, 1, outer = F, font = 2, side = 3, line = 1.0, at = 23.25)
 #abline(h = 8000)
 # plot 4:
 check.summary <- cast(check.df, "MIxS + nom.len ~ year.created", value = "study.accnos", fun.aggregate = "length")
@@ -96,6 +100,7 @@ barplot(
 mtext("Submission year", 1, 0, outer = T)
 mtext("Number of runs", 2, 0, outer = T)
 
+dev.off()
 
 ### figure 2: envo terms ####
 
