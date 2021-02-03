@@ -2,10 +2,9 @@
 
 ### figure 1: latlon, target gene, nominal length ####
 
-# object size 700x750
+# object size 700x550
 
-tiff(file="/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot1.tiff",
-     width=700, height=750)
+pdf("/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot1.pdf", width = 7, height = 5.5) # this will be in inches
 
 par(mfrow = c(2, 2), mar = c(4, 4, 1, 0.5), oma = c(1.5, 2, 2, 0))
 
@@ -104,7 +103,9 @@ dev.off()
 
 ### figure 2: envo terms ####
 
-# object size 700x550
+# object size 700x750
+pdf("/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot2.pdf", width = 7, height = 7.5) # this will be in inches
+
 par(mfcol = c(3, 2), mar = c(4, 4, 1, 0.5), oma = c(1.5, 2, 2, 0))
 
 # plot 1-3:
@@ -191,5 +192,5 @@ for(i in 1:length(check.summary)) {
 mtext("Submission year", 1, 0, outer = T)
 mtext("Number of runs", 2, 0, outer = T)
 
-
+dev.off()
 
