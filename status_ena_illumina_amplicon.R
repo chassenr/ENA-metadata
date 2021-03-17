@@ -269,6 +269,9 @@ expXML.parsed <- expXML.list[!expXML.list %in% check.exclude & !is.na(expXML.lis
 sum(names(expXML.parsed) %in% ena.out$experiment_accession) == length(expXML.parsed)
 ena.out$add_info_target_gene[ena.out$experiment_accession %in% names(expXML.parsed)] <- TRUE
 
+# define MIxS checklist names
+mixs.checklists <- paste0("ERC0000", c(12:25, 31))
+
 
 ### lat/lon available (run level) ####
 sum(is.na(ena.out$lat))
@@ -283,12 +286,12 @@ sum((!is.na(ena.out$lat) & !is.na(ena.out$lon)) | ena.out$add_info_lat_lon)/nrow
 # 98.03141% with some kind of lat/lon info
 
 check.df <- data.frame(
-  lat.lon = factor(ifelse(!is.na(ena.out$lat) & !is.na(ena.out$lon), "yes", ifelse(ena.out$add_info_lat_lon, "some", "no")), levels = c("yes", "some", "no")),
+  lat.lon = factor(ifelse(!is.na(ena.out$lat) & !is.na(ena.out$lon), "tsv", ifelse(ena.out$add_info_lat_lon, "xml", "no")), levels = c("tsv", "xml", "no")),
   year.created = gsub("-.*", "", ena.out$first_created),
   gfbio = ena.out$broker_name == "GFBIO",
   broker = ena.out$broker_name != "",
   study.accnos = ena.out$study_accession,
-  MIxS = ena.out$environmental_package != ""
+  MIxS = ena.out$environmental_package != "" & ena.out$checklist %in% mixs.checklists
 )
 
 # overview: lat/lon yes/no
@@ -346,8 +349,8 @@ for(i in unique(check.summary$MIxS)) {
 # over all years
 check.all <- cast(check.df, "lat.lon ~ MIxS", value = "study.accnos", fun.aggregate = "length")
 prop.table(as.matrix(check.all[, -1]), 2)
-# hardly any submissions without lat/lon information when MIxS is used
-# BUT: some 15% not machine readable
+# no submissions without lat/lon information when MIxS is used
+# BUT: some 14% not machine readable
 
 # overview: lat/lon yes/no separated by use of GFBio
 check.summary <- cast(check.df, "gfbio + lat.lon ~ year.created", value = "study.accnos", fun.aggregate = "length")
@@ -383,14 +386,21 @@ prop.table(as.matrix(check.all[, -1]), 2)
 View(ena.out[ena.out$study_accession %in% names(table(check.df[check.df$year.created == "2019" & check.df$gfbio & check.df$lat.lon == "no", "study.accnos"])), ])
 # those are 2 negative controls
 
-check.summary <- cast(check.df, "MIxS + gfbio + lat.lon ~ year.created", value = "study.accnos", fun.aggregate = "length")
+check.summary <- cast(
+  check.df,
+  "MIxS + gfbio + lat.lon ~ year.created", 
+  value = "study.accnos",
+  fun.aggregate = "length",
+  fill = 0,
+  add.missing = T
+)
 write.table(check.summary, "summary_latlon.txt", sep = "\t", quote = F, row.names = F)
 
 # summary:
 #   after 2014 proportion without any lat/lon quickly decreased
 #   since 2016 more of less constant proportion of runs without lat/lon over the years
-#   hardly any submissions without lat/lon information when MIxS is used, but some 15% not machine readable
-#   while only a few studies used a brokerage service (e.g.), this improved the availability of machine readable lat/lon
+#   no submissions without lat/lon information when MIxS + env package is used, but some 14% not machine readable
+#   while only a few studies used a brokerage service (e.g. GFBio), this improved the availability of machine readable lat/lon
 
 
 ### target gene information available (run level) ####
@@ -406,16 +416,13 @@ sum(ena.out$target_gene != "" | ena.out$add_info_target_gene)/nrow(ena.out) * 10
 # 7.079635% of runs with some kind of info about target gene (hidden in sample or experiment XML)
 
 check.df <- data.frame(
-  target.gene = factor(ifelse(ena.out$target_gene != "", "yes", ifelse(ena.out$add_info_target_gene, "xml", "no")), levels = c("yes", "xml", "no")),
+  target.gene = factor(ifelse(ena.out$target_gene != "", "tsv", ifelse(ena.out$add_info_target_gene, "xml", "no")), levels = c("tsv", "xml", "no")),
   year.created = gsub("-.*", "", ena.out$first_created),
   gfbio = ena.out$broker_name == "GFBIO",
   broker = ena.out$broker_name != "",
   study.accnos = ena.out$study_accession,
-  MIxS = ena.out$environmental_package != ""
+  MIxS = ena.out$environmental_package != "" & ena.out$checklist %in% mixs.checklists
 )
-# comment: 
-#   checklist information is not really useful because it only lists ERC[0-9]* and very few studies with MIxS,
-#   although MIxS environmental package is provided for quite a few runs
 
 # overview: target gene yes/no
 check.summary <- cast(check.df, "target.gene ~ year.created", value = "study.accnos", fun.aggregate = "length")
@@ -509,7 +516,14 @@ for(i in unique(check.summary$gfbio)) {
 check.all <- cast(check.df, "target.gene ~ gfbio", value = "study.accnos", fun.aggregate = "length")
 prop.table(as.matrix(check.all[, -1]), 2)
 
-check.summary <- cast(check.df, "MIxS + gfbio + target.gene ~ year.created", value = "study.accnos", fun.aggregate = "length")
+check.summary <- cast(
+  check.df,
+  "MIxS + gfbio + target.gene ~ year.created",
+  value = "study.accnos", 
+  fun.aggregate = "length",
+  fill = 0,
+  add.missing = T
+)
 write.table(check.summary, "summary_target_gene.txt", sep = "\t", quote = F, row.names = F)
 
 
@@ -526,7 +540,8 @@ check.df <- data.frame(
   gfbio = ena.out$broker_name == "GFBIO",
   broker = ena.out$broker_name != "",
   study.accnos = ena.out$study_accession,
-  MIxS = ena.out$environmental_package != ""
+  MIxS = ena.out$environmental_package != "" & ena.out$checklist %in% mixs.checklists,
+  nom.len.value = ena.out$nominal_length
 )
 
 # overview: nominal length yes/no
@@ -618,9 +633,21 @@ for(i in unique(check.summary$gfbio)) {
 check.all <- cast(check.df, "nom.len ~ gfbio", value = "study.accnos", fun.aggregate = "length")
 prop.table(as.matrix(check.all[, -1]), 2)
 table(ena.out$nominal_length[ena.out$broker_name == "GFBIO"])
+barplot(table(ena.out$nominal_length[ena.out$environmental_package != "" & ena.out$checklist %in% mixs.checklists]))
+barplot(table(ena.out$nominal_length))
 
-check.summary <- cast(check.df, "MIxS + gfbio + nom.len ~ year.created", value = "study.accnos", fun.aggregate = "length")
+check.summary <- cast(
+  check.df,
+  "MIxS + gfbio + nom.len ~ year.created",
+  value = "study.accnos",
+  fun.aggregate = "length",
+  fill = 0,
+  add.missing = T
+)
 write.table(check.summary, "summary_nomlen.txt", sep = "\t", quote = F, row.names = F)
+
+tmp <- cast(check.df[check.df$nom.len == "yes", ], "nom.len.value ~ MIxS", fun.aggregate = length, fill = 0, value = "study.accnos")
+tmp$sum <- tmp$'FALSE' + tmp$'TRUE'
 
 
 ### correct use of ontology terms ####
@@ -699,7 +726,7 @@ check.df <- data.frame(
   gfbio = ena.out$broker_name == "GFBIO",
   broker = ena.out$broker_name != "",
   study.accnos = ena.out$study_accession,
-  MIxS = ena.out$environmental_package != ""
+  MIxS = ena.out$environmental_package != "" & ena.out$checklist %in% mixs.checklists
 )
 for(i in names(ena.in.envo)) {
   check.df[unique(c(ena.in.envo[[i]]$name2$rn, ena.in.envo[[i]]$name$rn)), i] <- "some"
@@ -843,9 +870,9 @@ lapply(check.all, function(x) prop.table(as.matrix(x[, -1]), 2))
 View(ena.out[ena.out$broker_name == "GFBIO" & ena.out$environment_biome == "", ])
 
 check.summary <- list(
-  cast(check.df, "MIxS + gfbio + biome ~ year.created", value = "study.accnos", fun.aggregate = "length"),
-  cast(check.df, "MIxS + gfbio + material ~ year.created", value = "study.accnos", fun.aggregate = "length"),
-  cast(check.df, "MIxS + gfbio + feature ~ year.created", value = "study.accnos", fun.aggregate = "length")
+  cast(check.df, "MIxS + gfbio + biome ~ year.created", value = "study.accnos", fun.aggregate = "length", fill = 0, add.missing = T),
+  cast(check.df, "MIxS + gfbio + material ~ year.created", value = "study.accnos", fun.aggregate = "length", fill = 0, add.missing = T),
+  cast(check.df, "MIxS + gfbio + feature ~ year.created", value = "study.accnos", fun.aggregate = "length", fill = 0, add.missing = T)
 )
 names(check.summary) <- names(ena.in.envo)
 write.table(
@@ -869,7 +896,7 @@ check.df <- data.frame(
   gfbio = ena.out$broker_name == "GFBIO",
   broker = ena.out$broker_name != "",
   study.accnos = ena.out$study_accession,
-  MIxS = ena.out$environmental_package != ""
+  MIxS = ena.out$environmental_package != "" & ena.out$checklist %in% mixs.checklists
 )
 
 # overview: lat/lon yes/no
@@ -961,7 +988,14 @@ check.all <- cast(check.df, "env.sample ~ gfbio", value = "study.accnos", fun.ag
 prop.table(as.matrix(check.all[, -1]), 2)
 # same here (don't show additional to MIxS plot)
 
-check.summary <- cast(check.df, "MIxS + gfbio + env.sample ~ year.created", value = "study.accnos", fun.aggregate = "length")
+check.summary <- cast(
+  check.df, 
+  "MIxS + gfbio + env.sample ~ year.created", 
+  value = "study.accnos",
+  fun.aggregate = "length",
+  fill = 0,
+  add.missing = T
+)
 write.table(check.summary, "summary_env_sample.txt", sep = "\t", quote = F, row.names = F)
 
 
