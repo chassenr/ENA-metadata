@@ -2,9 +2,9 @@
 
 ### figure 1: latlon, target gene, nominal length ####
 
-# object size 700x550
+# object size 750x550
 
-pdf("/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot1.pdf", width = 7, height = 5.5) # this will be in inches
+pdf("/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot1.pdf", width = 7.5, height = 5.5) # this will be in inches
 
 par(mfrow = c(2, 2), mar = c(4, 4, 1, 0.5), oma = c(1.5, 2, 2, 0))
 
@@ -33,7 +33,7 @@ barplot(
   tcl = -0.3
 )
 mtext("All runs",3, 1, outer = F)
-mtext("Latitude/longitude",3, 1, outer = F, font = 2, side = 3, line = 1.0, at = 25)
+mtext("Latitude/longitude",3, 1, outer = F, font = 2, side = 3, line = 0.5, at = 31.2)
 #abline(h = 10000)
 # plot 2:
 check.summary <- cast(check.df, "MIxS + lat.lon ~ year.created", value = "study.accnos", fun.aggregate = "length")
@@ -77,7 +77,7 @@ barplot(
   mgp = c(2.5, 0.5, 0),
   tcl = -0.3
 )
-mtext("Nominal Length",3, 1, outer = F, font = 2, side = 3, line = 1.0, at = 23.25)
+mtext("Nominal Length",3, 1, outer = F, font = 2, side = 3, line = 0.8, at = 28.75)
 #abline(h = 8000)
 # plot 4:
 check.summary <- cast(check.df, "MIxS + nom.len ~ year.created", value = "study.accnos", fun.aggregate = "length")
@@ -149,13 +149,13 @@ for(i in 1:length(check.summary)) {
   #abline(h = 8000)
   if(i == 1) {
     mtext("All runs", 3, 1, outer = F)
-    mtext("Biome",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 17)
+    mtext("Biome",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 20)
   }
   if(i == 2) {
-       mtext("Material",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 18)
+       mtext("Material",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 21)
   }
   if(i == 3) {
-    mtext("Feature",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 17.8)
+    mtext("Feature",3, 1, outer = F, font = 2, side = 3, line = 1.7, at = 20.8)
   }
 }
 
