@@ -96,7 +96,7 @@ barplot(
   cex.names = 1,
   lwd = 0.5
 )
-mtext("MIxS environmental package", 3, 1, outer = F)
+mtext("MIxS", 3, 1, outer = F)
 # plot 3:
 check.df <- data.frame(
   target.gene = factor(ifelse(ena.out$target_gene != "", "tsv", ifelse(ena.out$add_info_target_gene, "xml", "no")), levels = c("tsv", "xml", "no")),
@@ -404,7 +404,7 @@ for(i in 1:length(check.summary)) {
     lwd = 0.5
   )
   if(i == 1) {
-    mtext("MIxS environmental package", 3, 1, outer = F)
+    mtext("MIxS", 3, 1, outer = F)
   }
 }
 # labels
