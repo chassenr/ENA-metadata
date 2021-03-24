@@ -4,7 +4,7 @@
 
 # object size 750x550
 
-pdf("/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot1.pdf", width = 7.5, height = 5.5) # this will be in inches
+pdf("/Users/Tobi/Desktop/Tobi/ENA Paper/ENA_out/plot1.pdf", width = 7, height = 5.5) # this will be in inches
 
 par(mfrow = c(2, 2), mar = c(4, 4, 1, 0.5), oma = c(1.5, 2, 2, 0), ann = F, yaxs = "i", lwd = 0.5)
 
@@ -36,8 +36,7 @@ axis(
   tcl = -0.3,
   lwd = 0.5
 )
-abline(h = 2000)
-
+abline(h = 3000)
 barplot(
   as.matrix(check.summary[, -c(1, ncol(check.summary))]),
   col = as.character(check.summary$col),
@@ -63,7 +62,6 @@ text(
 )
 par(xpd = F)
 
-abline(h = 2000)
 # plot 2:
 check.summary <- cast(check.df, "MIxS + lat.lon ~ year.created", value = "study.accnos", fun.aggregate = "length", fill = 0, add.missing = T)
 check.summary$col <- check.summary$lat.lon
@@ -73,7 +71,7 @@ plot(
   type = "n",
   axes = F,
   xlim = c(0.2, 13.2),
-  ylim = c(0, 8000),
+  ylim = c(0, 3000),
   lwd = 0.5
 )
 axis(
@@ -102,7 +100,7 @@ barplot(
   cex.names = 1,
   lwd = 0.5
 )
-mtext("MIxS environmental package", 3, 1, outer = F)
+mtext("MIxS", 3, 1, outer = F)
 
 # plot 3:
 check.df <- data.frame(
@@ -132,7 +130,7 @@ axis(
   tcl = -0.3,
   lwd = 0.5
 )
-abline(h = 2000)
+abline(h = 3000)
 barplot(
   as.matrix(check.summary[, -c(1, ncol(check.summary))]),
   col = as.character(check.summary$col),
@@ -164,7 +162,7 @@ plot(
   type = "n",
   axes = F,
   xlim = c(0.2, 13.2),
-  ylim = c(0, 8000),
+  ylim = c(0, 3000),
   lwd = 0.5
 )
 axis(
@@ -179,7 +177,7 @@ barplot(
   as.matrix(check.summary[as.logical(check.summary$MIxS), -c(1, 2, ncol(check.summary))]),
   col = levels(check.summary$col),
   legend.text = paste0(
-    levels(check.summary$target.gene),
+    levels(check.summary$nom.len),
     " (", 
     round(rowSums(check.summary[as.logical(check.summary$MIxS), -c(1, 2, ncol(check.summary))])/sum(rowSums(check.summary[as.logical(check.summary$MIxS), -c(1, 2, ncol(check.summary))])) * 100),
     "%)"
@@ -248,7 +246,7 @@ for(i in 1:length(check.summary)) {
     tcl = -0.3,
     lwd = 0.5
   )
-  abline(h = 2000)
+  abline(h = 3000)
   barplot(
     as.matrix(check.summary[[i]][, -c(1, ncol(check.summary[[i]]))]),
     col = as.character(check.summary[[i]]$col),
@@ -296,7 +294,7 @@ for(i in 1:length(check.summary)) {
     type = "n",
     axes = F,
     xlim = c(0.2, 13.2),
-    ylim = c(0, 8000),
+    ylim = c(0, 3000),
     lwd = 0.5
   )
   axis(
@@ -326,7 +324,7 @@ for(i in 1:length(check.summary)) {
     lwd = 0.5
   )
   if(i == 1) {
-    mtext("MIxS environmental package", 3, 1, outer = F)
+    mtext("MIxS", 3, 1, outer = F)
     
   }
 }
