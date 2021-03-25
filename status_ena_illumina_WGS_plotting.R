@@ -71,7 +71,7 @@ plot(
   type = "n",
   axes = F,
   xlim = c(0.2, 13.2),
-  ylim = c(0, 3000),
+  ylim = c(0, 2500),
   lwd = 0.5
 )
 axis(
@@ -162,7 +162,7 @@ plot(
   type = "n",
   axes = F,
   xlim = c(0.2, 13.2),
-  ylim = c(0, 3000),
+  ylim = c(0, 2500),
   lwd = 0.5
 )
 axis(
@@ -294,7 +294,7 @@ for(i in 1:length(check.summary)) {
     type = "n",
     axes = F,
     xlim = c(0.2, 13.2),
-    ylim = c(0, 3000),
+    ylim = c(0, 2500),
     lwd = 0.5
   )
   axis(
