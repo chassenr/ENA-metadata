@@ -36,7 +36,7 @@ axis(
   tcl = -0.3,
   lwd = 0.5
 )
-abline(h = 3000)
+abline(h = 2500)
 barplot(
   as.matrix(check.summary[, -c(1, ncol(check.summary))]),
   col = as.character(check.summary$col),
@@ -130,7 +130,7 @@ axis(
   tcl = -0.3,
   lwd = 0.5
 )
-abline(h = 3000)
+abline(h = 2500)
 barplot(
   as.matrix(check.summary[, -c(1, ncol(check.summary))]),
   col = as.character(check.summary$col),
@@ -246,7 +246,7 @@ for(i in 1:length(check.summary)) {
     tcl = -0.3,
     lwd = 0.5
   )
-  abline(h = 3000)
+  abline(h = 2500)
   barplot(
     as.matrix(check.summary[[i]][, -c(1, ncol(check.summary[[i]]))]),
     col = as.character(check.summary[[i]]$col),
