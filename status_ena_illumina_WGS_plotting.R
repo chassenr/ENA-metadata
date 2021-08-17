@@ -36,7 +36,7 @@ axis(
   tcl = -0.3,
   lwd = 0.5
 )
-abline(h = 2500)
+abline(h = 3000)
 barplot(
   as.matrix(check.summary[, -c(1, ncol(check.summary))]),
   col = as.character(check.summary$col),
@@ -71,7 +71,7 @@ plot(
   type = "n",
   axes = F,
   xlim = c(0.2, 13.2),
-  ylim = c(0, 2500),
+  ylim = c(0, 3000),
   lwd = 0.5
 )
 axis(
@@ -130,7 +130,7 @@ axis(
   tcl = -0.3,
   lwd = 0.5
 )
-abline(h = 2500)
+abline(h = 3000)
 barplot(
   as.matrix(check.summary[, -c(1, ncol(check.summary))]),
   col = as.character(check.summary$col),
@@ -162,7 +162,7 @@ plot(
   type = "n",
   axes = F,
   xlim = c(0.2, 13.2),
-  ylim = c(0, 2500),
+  ylim = c(0, 3000),
   lwd = 0.5
 )
 axis(
@@ -246,7 +246,7 @@ for(i in 1:length(check.summary)) {
     tcl = -0.3,
     lwd = 0.5
   )
-  abline(h = 2500)
+  abline(h = 3000)
   barplot(
     as.matrix(check.summary[[i]][, -c(1, ncol(check.summary[[i]]))]),
     col = as.character(check.summary[[i]]$col),
@@ -294,7 +294,7 @@ for(i in 1:length(check.summary)) {
     type = "n",
     axes = F,
     xlim = c(0.2, 13.2),
-    ylim = c(0, 2500),
+    ylim = c(0, 3000),
     lwd = 0.5
   )
   axis(

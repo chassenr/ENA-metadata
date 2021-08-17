@@ -1,4 +1,4 @@
-# plotting status ENA metadata
+# plotting status ENA metadata (Amplicon)
 
 ### figure 1: latlon, target gene, nominal length ####
 
@@ -281,6 +281,9 @@ mtext("Number of cases", 2, 0, outer = T)
 
 dev.off()
 
+#####
+
+
 ### figure 2: envo terms ####
 
 pdf("ENA_fig_envo.pdf", width = 7, height = 7.5)
@@ -413,6 +416,4 @@ mtext("Number of cases", 2, 0, outer = T)
 
 dev.off()
 
-### figure 3: venn diagram ####
-
-venn(oligotyping.studies[, 2:4], ilcs = 1.3, sncs = 1)
+#####
