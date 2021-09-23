@@ -18,7 +18,7 @@ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'result=rea
 
 
 ### WGS data sets on ENA
-On 08.01.2020, the [ENA advanced search](https://www.ebi.ac.uk/ena/browser/advanced-search) was used to retrieve the metadata (all available fields) for **raw reads** with the following search query:
+On 08.01.2021, the [ENA advanced search](https://www.ebi.ac.uk/ena/browser/advanced-search) was used to retrieve the metadata (all available fields) for **raw reads** with the following search query:
 
 ```
 tax_tree(410657) AND library_selection = "RANDOM" AND library_strategy = "WGS" AND library_layout = "PAIRED" AND instrument_platform = "ILLUMINA" AND library_source = "METAGENOMIC" AND first_created<=2020-12-31
