@@ -34,3 +34,48 @@ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d 'result=rea
 
 For both searches, results were downloaded in tsv and xml format for further curation and plotting.
 
+
+## Analysis update
+
+The above search was repeated on 12.07.2023. In the meantime the number of runs had tripled and the ENA API had been updated. The evaluation of the status of sequence metadata on ENA was repeated to account for those changes.
+The download of the sample XML was unsuccessful from the ENA advanced search results website. Downloading individual xml independently:
+
+```
+# on bio-48
+cd /home/hassenru/ENA_data_mining
+cut -f2 results_read_run_tsv.txt | sed '1d' | sort | uniq | parallel -j32 'wget https://www.ebi.ac.uk/ena/browser/api/xml/{} -O sample_xml/{}.xml'
+# for those where download failed, get sample metadata from biosamples
+cd sample_xml
+ls -l | sed '1d' | sed -r 's/ +/\t/g' | awk '$5 == 0' | cut -f9 | sed 's/\.xml//' | parallel -j32 ' wget https://www.ebi.ac.uk/biosamples/samples/{}.xml -O ../biosample_xml/{}.xml'
+# this did not yield any useful results
+# experiment xml
+cd ..
+cut -f46 results_read_run_tsv.txt | sed '1d' | sort | uniq | parallel -j32 'wget https://www.ebi.ac.uk/ena/browser/api/xml/{} -O experiment_xml/{}.xml'
+```
+
+Weirdly, there are many runs whose sample accession number does not exist (neither on samples nor on biosamples). Checking the biosample DB only retrieved additional records for 3 sample accessions. I am not including this output for now as it will not impact the overall results. Likewise there are also runs whose experiment accession does not exist (anymore).
+
+
+Retrieve publication via XREF if available this way:
+
+```
+# xref on study level
+cd xref_out
+cut -f109 ../results_read_run_tsv.txt | sed '1d' | sort | uniq | while read line
+do
+  wget https://www.ebi.ac.uk/ena/xref/rest/tsv/search?accession=${line} -O tmp.txt
+  sed '1d' tmp.txt >> xref_results_primary_study.txt
+  rm tmp.txt
+done
+cut -f144 ../results_read_run_tsv.txt | sed '1d' | sort | uniq | while read line
+do
+  wget https://www.ebi.ac.uk/ena/xref/rest/tsv/search?accession=${line} -O tmp.txt
+  sed '1d' tmp.txt >> xref_results_secondary_study.txt
+  rm tmp.txt
+done
+```
+
+
+
+
+
