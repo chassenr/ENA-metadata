@@ -75,7 +75,15 @@ do
 done
 ```
 
+Process parsed sample xml to extract all possible attribute names.
 
+```
+# on bio-48
+cd /home/hassenru/ENA_data_mining/xml_parsed_csv/sample_csv
+ls -1 | parallel -j30 "head -1 {} | tr '\t' '\n' " > ../all_sample_attribute_names.txt
+cd ..
+sort all_sample_attribute_names.txt | uniq -c | sed -e 's/^ *//' -e 's/ /\t/' > all_sample_attribute_names_counts.txt
+```
 
 
 
