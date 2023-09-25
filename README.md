@@ -1,3 +1,6 @@
+## :warning: This repository is not maintained anymore. Because of github enforcing 2FA, the repository moved to a less restrictive platform at: https://git.io-warnemuende.de/hassenru/ENA-metadata
+
+
 # ENA-metadata
 R code to analyze the metadata downloaded from the ENA advanced search. Preparation of manuscript about data mining and status of ENA metadata.
 
