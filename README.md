@@ -176,6 +176,11 @@ ls -1 | parallel -j48 'python /path/to/repo/convert_xml_experiment_attributes_to
 ```
 
 
+### Metadata quality assessment
+
+For each of the selected metadata fields, the code for their assessment is provided in this [Rscript](https://github.com/chassenr/ENA-metadata/blob/master/status_ena_illumina_amplicon.R), which also includes the chi-square statistics.
+
+
 ### Figure generation
 
 Data visualization is described in [figure_generation.R](https://github.com/chassenr/ENA-metadata/blob/master/figure_generation.R).
